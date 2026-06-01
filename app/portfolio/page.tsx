@@ -922,8 +922,8 @@ export default function PortfolioPage() {
                 <div className="text-sm text-slate-500">총 평가손익 (KRW)</div>
                 <div
                   className={`mt-2 text-3xl font-bold ${summary.totalProfitLossKrw >= 0
-                      ? "text-emerald-600"
-                      : "text-red-600"
+                    ? "text-emerald-600"
+                    : "text-red-600"
                     }`}
                 >
                   {formatCurrency(summary.totalProfitLossKrw, "KRW")}
@@ -934,8 +934,8 @@ export default function PortfolioPage() {
                 <div className="text-sm text-slate-500">총 수익률</div>
                 <div
                   className={`mt-2 text-3xl font-bold ${summary.totalReturnRate >= 0
-                      ? "text-emerald-600"
-                      : "text-red-600"
+                    ? "text-emerald-600"
+                    : "text-red-600"
                     }`}
                 >
                   {summary.totalReturnRate.toFixed(2)}%
@@ -975,7 +975,12 @@ export default function PortfolioPage() {
                         />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value: number) => `${value}%`} />
+                    <Tooltip
+                      formatter={(value) => {
+                        const numberValue = Number(value);
+                        return `${numberValue.toFixed(1)}%`;
+                      }}
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
