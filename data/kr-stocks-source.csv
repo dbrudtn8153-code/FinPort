@@ -1,0 +1,68 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+
+type Market = "KOSPI" | "KOSDAQ";
+
+type KrStock = {
+  name: string;
+  symbol: string;
+  market: Market;
+};
+
+function parseCsvLine(line: string) {
+  return line.split(",").map((v) => v.trim().replace(/^"|"$/g, ""));
+}
+
+function toYahooSymbol(code: string, market: string) {
+  const cleanCode = code.padStart(6, "0");
+
+  if (market === "KOSDAQ") {
+    return `${cleanCode}.KQ`;
+  }
+
+  return `${cleanCode}.KS`;
+}
+
+async function main() {
+  const sourcePath = path.join(process.cwd(), "data", "kr-stocks-source.csv");
+  const outputPath = path.join(process.cwd(), "data", "kr-stocks.json");
+
+  const csv = await fs.readFile(sourcePath, "utf-8");
+  const lines = csv.split(/\r?\n/).filter(Boolean);
+
+  const body = lines.slice(1);
+
+  const stocks: KrStock[] = body
+    .map((line) => {
+      const [name, code, market] = parseCsvLine(line);
+
+      if (!name || !code || !market) return null;
+
+      const normalizedMarket = market.toUpperCase();
+
+      if (normalizedMarket !== "KOSPI" && normalizedMarket !== "KOSDAQ") {
+        return null;
+      }
+
+      return {
+        name,
+        symbol: toYahooSymbol(code, normalizedMarket),
+        market: normalizedMarket as Market,
+      };
+    })
+    .filter((item): item is KrStock => item !== null);
+
+  const deduped = Array.from(
+    new Map(stocks.map((item) => [item.symbol, item])).values()
+  ).sort((a, b) => a.name.localeCompare(b.name, "ko"));
+
+  await fs.writeFile(outputPath, JSON.stringify(deduped, null, 2), "utf-8");
+
+  console.log(`국내 종목 ${deduped.length}개 저장 완료`);
+  console.log(outputPath);
+}
+
+main().catch((error) => {
+  console.error("kr-stocks.json 생성 실패:", error);
+  process.exit(1);
+});

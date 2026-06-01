@@ -1,0 +1,32 @@
+[
+  {
+    "name": "보원케미칼",
+    "symbol": "024070.KS",
+    "market": "KOSPI"
+  },
+  {
+    "name": "빛과전자",
+    "symbol": "069540.KQ",
+    "market": "KOSDAQ"
+  },
+  {
+    "name": "삼성전자",
+    "symbol": "005930.KS",
+    "market": "KOSPI"
+  },
+  {
+    "name": "카카오",
+    "symbol": "035720.KS",
+    "market": "KOSPI"
+  },
+  {
+    "name": "NAVER",
+    "symbol": "035420.KS",
+    "market": "KOSPI"
+  },
+  {
+    "name": "SK하이닉스",
+    "symbol": "000660.KS",
+    "market": "KOSPI"
+  }
+]
