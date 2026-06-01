@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FinPort
 
-## Getting Started
+## AI 금융 판단 코치 플랫폼
 
-First, run the development server:
+FinPort는 개인 투자자의 포트폴리오와 투자 행동을 분석하여 감정적 투자, 고점 추격 매수, 특정 종목 쏠림, 리밸런싱 필요성을 알려주는 웹 기반 금융 판단 코치 플랫폼입니다.
+
+기존 포트폴리오 관리 서비스가 보유 종목과 수익률 확인에 집중한다면, FinPort는 사용자의 금융 판단이 합리적인지 점검하고 더 나은 의사결정을 돕는 것을 목표로 합니다.
+
+## 주요 기능
+
+- 포트폴리오 수익률 계산
+- 총 투자원금, 평가금액, 평가손익 계산
+- 국내/해외 주식 및 ETF 지원
+- USD/KRW 환율 반영
+- 자산 비중 도넛 차트 시각화
+- 목표 비중 기반 리밸런싱 추천
+- 현금 비중 반영
+- 한국 주식 한글 검색 기능
+- 투자 성향 기반 포트폴리오 추천 기능 확장 예정
+
+## 개발 배경
+
+개인 투자자는 투자 과정에서 데이터보다 감정에 흔들리는 경우가 많습니다.
+
+상승장에서는 뒤처질까 봐 무리하게 추격 매수를 하고, 하락장에서는 공포감 때문에 성급하게 손절하기도 합니다. 또한 특정 종목이나 ETF에 과도하게 집중하거나, 현금 비중을 관리하지 못해 비합리적인 의사결정을 하기도 합니다.
+
+FinPort는 이러한 문제를 해결하기 위해 사용자의 포트폴리오 구조와 투자 행동을 분석하고, 리밸런싱과 위험 경고를 통해 더 합리적인 금융 판단을 돕고자 기획되었습니다.
+
+## 핵심 차별점
+
+- 단순 수익률 계산이 아닌 금융 판단 보조
+- 목표 비중 기반 리밸런싱 추천
+- 한국/미국 자산 혼합 포트폴리오 분석
+- 현금 비중까지 포함한 포트폴리오 관리
+- 향후 투자 성향 테스트와 행동 교정 코칭 기능 확장 가능
+
+## 기술 스택
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Recharts
+- Yahoo Finance 기반 가격 조회
+- LocalStorage 기반 포트폴리오 저장
+
+## 향후 개발 계획
+
+- 투자 성향 테스트 기능 추가
+- MBTI형 투자 성향 결과 제공
+- 투자 성향 기반 추천 포트폴리오 제공
+- 손절 기준 기반 포지션 사이징 계산
+- 고점 추격 매수, 몰빵 투자 등 행동 경고 기능
+- Vercel 배포 및 모바일 최적화
+
+## 실행 방법
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
