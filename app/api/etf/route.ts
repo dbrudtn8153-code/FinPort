@@ -1,3 +1,14 @@
+import krStocks from "@/data/kr-stocks.json";
+
+type KrStock = {
+  name: string;
+  symbol: string;
+  market: string;
+};
+
+const krStockMap = new Map(
+  (krStocks as KrStock[]).map((item) => [item.symbol, item.name])
+);
 type QuoteResult = {
   symbol: string;
   name: string;
@@ -27,15 +38,16 @@ async function fetchYahooPrice(symbol: string) {
   const result = json?.chart?.result?.[0];
   const meta = result?.meta;
 
-return {
-  symbol,
-  name:
-    meta?.longName ||
-    meta?.shortName ||
-    meta?.symbol ||
+  return {
     symbol,
-  price: meta?.regularMarketPrice ?? 0,
-};
+    name:
+      krStockMap.get(symbol) ||
+      meta?.longName ||
+      meta?.shortName ||
+      meta?.symbol ||
+      symbol,
+    price: meta?.regularMarketPrice ?? 0,
+  };
 }
 
 export async function GET(request: Request) {
