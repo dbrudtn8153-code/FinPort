@@ -181,6 +181,7 @@ export default function PortfolioPage() {
     const savedHoldings = localStorage.getItem("portfolio-holdings");
     const savedCashAmount = localStorage.getItem("portfolio-cash-amount");
     const savedCashTargetWeight = localStorage.getItem("portfolio-cash-target-weight");
+    const savedResults = localStorage.getItem("portfolio-results");
     if (savedHoldings) {
       try {
         const parsed = JSON.parse(savedHoldings);
@@ -189,6 +190,12 @@ export default function PortfolioPage() {
         console.error("저장된 포트폴리오 불러오기 실패:", error);
       }
     }
+    if (savedResults) {
+      try {
+        const parsed = JSON.parse(savedResults);
+        if (Array.isArray(parsed) && parsed.length > 0) setResults(parsed);
+      } catch { }
+    }
     if (savedCashAmount !== null) setCashAmount(savedCashAmount);
     if (savedCashTargetWeight !== null) setCashTargetWeight(savedCashTargetWeight);
   }, []);
@@ -196,6 +203,11 @@ export default function PortfolioPage() {
   useEffect(() => { localStorage.setItem("portfolio-holdings", JSON.stringify(holdings)); }, [holdings]);
   useEffect(() => { localStorage.setItem("portfolio-cash-amount", cashAmount); }, [cashAmount]);
   useEffect(() => { localStorage.setItem("portfolio-cash-target-weight", cashTargetWeight); }, [cashTargetWeight]);
+  useEffect(() => {
+    if (results.length > 0) {
+      localStorage.setItem("portfolio-results", JSON.stringify(results));
+    }
+  }, [results]);
 
   useEffect(() => {
     async function loadExchangeRate() {
@@ -549,7 +561,12 @@ export default function PortfolioPage() {
                   <tbody>
                     {results.map((item) => (
                       <tr key={item.id} className="rounded-2xl bg-slate-50">
-                        <td className="rounded-l-2xl px-4 py-4"><div className="font-semibold">{item.name}</div><div className="text-xs text-slate-500">{item.symbol}</div></td>
+                        <td className="rounded-l-2xl px-4 py-4">
+                          <a href={`/stock/${encodeURIComponent(item.symbol)}`} className="hover:text-blue-600">
+                            <div className="font-semibold">{item.name}</div>
+                            <div className="text-xs text-slate-500">{item.symbol}</div>
+                          </a>
+                        </td>
                         <td className="px-4 py-4">{item.quantity}</td>
                         <td className="px-4 py-4">{formatCurrency(item.avgPrice, item.currency)}</td>
                         <td className="px-4 py-4">{formatCurrency(item.currentPrice, item.currency)}</td>
